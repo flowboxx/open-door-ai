@@ -1,0 +1,28 @@
+# Local test WordPress. The plugin is COPIED in (docker cp), never bind-mounted:
+# "wp plugin uninstall" deletes the plugin folder and would delete the repo.
+services:
+  db:
+    image: mariadb:11
+    environment: {MARIADB_DATABASE: wp, MARIADB_USER: wp, MARIADB_PASSWORD: wp, MARIADB_ROOT_PASSWORD: root}
+  wp:
+    image: wordpress:latest
+    depends_on: [db]
+    ports: ["8089:80"]
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wp
+      WORDPRESS_DB_PASSWORD: wp
+      WORDPRESS_DB_NAME: wp
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME','https://localhost:8089');
+        define('WP_SITEURL','https://localhost:8089');
+        $$_SERVER['HTTPS']='on';
+    volumes: [wpdata:/var/www/html]
+  cli:
+    image: wordpress:cli
+    depends_on: [wp]
+    user: "33:33"
+    volumes: [wpdata:/var/www/html]
+    environment: {WORDPRESS_DB_HOST: db, WORDPRESS_DB_USER: wp, WORDPRESS_DB_PASSWORD: wp, WORDPRESS_DB_NAME: wp}
+    entrypoint: ["wp"]
+volumes: {wpdata: {}}
