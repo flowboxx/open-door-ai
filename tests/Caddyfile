@@ -1,0 +1,5 @@
+# Test only: HTTPS in front of the test WordPress so login cookies behave like on a real site.
+https://localhost:8443 {
+	tls internal
+	reverse_proxy wp:80
+}

@@ -1,0 +1,32 @@
+# Browser test WordPress: same as docker-compose.yml, but reachable via real HTTPS (Caddy, self-signed) on 8443.
+# The plugin is COPIED in (docker cp), never bind-mounted (wp plugin uninstall would delete the repo).
+services:
+  db:
+    image: mariadb:11
+    environment: {MARIADB_DATABASE: wp, MARIADB_USER: wp, MARIADB_PASSWORD: wp, MARIADB_ROOT_PASSWORD: root}
+  wp:
+    image: wordpress:latest
+    depends_on: [db]
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wp
+      WORDPRESS_DB_PASSWORD: wp
+      WORDPRESS_DB_NAME: wp
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME','https://localhost:8443');
+        define('WP_SITEURL','https://localhost:8443');
+        $$_SERVER['HTTPS']='on';
+    volumes: [wpdata:/var/www/html]
+  proxy:
+    image: caddy:2
+    depends_on: [wp]
+    ports: ["8443:8443"]
+    volumes: ["./Caddyfile:/etc/caddy/Caddyfile:ro"]
+  cli:
+    image: wordpress:cli
+    depends_on: [wp]
+    user: "33:33"
+    volumes: [wpdata:/var/www/html]
+    environment: {WORDPRESS_DB_HOST: db, WORDPRESS_DB_USER: wp, WORDPRESS_DB_PASSWORD: wp, WORDPRESS_DB_NAME: wp}
+    entrypoint: ["wp"]
+volumes: {wpdata: {}}
