@@ -1,6 +1,6 @@
 # Open Door for AI Assistants (ODAA)
 
-When an AI assistant such as ChatGPT finds your business, it can leave an inquiry for you by e-mail (inquiry service coming soon).
+When an AI assistant such as ChatGPT finds your business, it can leave an inquiry for you by e-mail (optional inquiry service).
 
 Open Door is a free WordPress plugin. You answer three questions (company name, services, e-mail address). The plugin then serves:
 
@@ -10,9 +10,9 @@ Open Door is a free WordPress plugin. You answer three questions (company name, 
 * a small read-only MCP endpoint ("who are you", "what do you offer")
 * a block and a shortcode, "Ask an AI about us"
 
-There is no AI inside the plugin, no tracking, and no data is sent anywhere.
+There is no AI inside the plugin and no tracking. Without the inquiry service no data is sent anywhere.
 
-The optional inquiry service (19 EUR per month plus VAT, cancellable monthly) is a separate service by flowboxx and starts soon. It is not part of this plugin.
+The optional inquiry service (19 EUR per month plus VAT, cancellable monthly) is a separate service by flowboxx. It is not part of the free plugin, and nothing is sent to it until you register on the settings page (see "External services" in `readme.txt`).
 
 * Requires WordPress 6.4, PHP 7.4, https
 * License: GPLv2 or later

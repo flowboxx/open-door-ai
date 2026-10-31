@@ -29,6 +29,26 @@ PID=$(w post create --post_type=page --post_status=publish --post_title=Info --p
 w eval 'echo WP_Block_Type_Registry::get_instance()->is_registered("open-door-ai/ask") ? "REG" : "NOREG";' | grep -qx REG && ok "Block registriert" || bad "Block registriert"
 w --user=a eval 'Open_Door_Admin::page();' | grep -q "Save and switch on" && ok "Admin-Seite rendert" || bad "Admin-Seite"
 w eval 'print_r(Open_Door_Admin::sanitize(array("company"=>"<script>x</script>Firma","contact_mail"=>"nicht")));' | grep -q "script" && bad sanitize || ok sanitize
+# Anfragen-Dienst (0.3.0): gegen einen Stand-in-Dienst auf dem Host, nichts geht ins Netz
+ST="$OUT/stub_state"; SL="$OUT/stub_log"; echo ausstehend > "$ST"; : > "$SL"
+docker run -d --rm --name aidoor-stub --network aidoor_default -v "$HERE/tests":/t:ro -v "$OUT":/o python:3.12-alpine python /t/service_stub.py 8765 /o/stub_state /o/stub_log >/dev/null
+docker exec aidoor-wp-1 mkdir -p /var/www/html/wp-content/mu-plugins
+docker exec aidoor-wp-1 sh -c "echo \"<?php add_filter('open_door_service_url', function(){ return 'http://aidoor-stub:8765/open-door'; });\" > /var/www/html/wp-content/mu-plugins/stub.php"
+sleep 1
+w --user=a eval 'Open_Door_Admin::page();' | grep -q "Register for the inquiry service" && ok "Dienst-Box: Anmelden-Knopf" || bad "Dienst-Box"
+w eval 'echo Open_Door_Service::is_registered() ? "JA" : "NEIN";' | grep -qx NEIN && ok "vor Anmeldung nicht registriert" || bad "vor Anmeldung"
+[ ! -s "$SL" ] && ok "vor Anmeldung nichts gesendet" || bad "vor Anmeldung gesendet"
+w eval 'var_dump(Open_Door_Service::register());' | grep -q "bool(true)" && ok "Anmeldung" || bad "Anmeldung"
+grep -q '"mail":"info@example.com"' "$SL" && grep -q 'site_url' "$SL" && ok "Anmeldung sendet nur Adresse und Mail" || bad "Anmelde-Inhalt"
+curl -s -X POST -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' "$U" | grep -q leave_inquiry && bad "Werkzeug vor Aktivierung sichtbar" || ok "Werkzeug erst mit aktivem Abo"
+echo aktiv > "$ST"; w transient delete open_door_service_state >/dev/null 2>&1
+curl -s -X POST -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' "$U" | grep -q leave_inquiry && ok "Werkzeug mit aktivem Abo sichtbar" || bad "Werkzeug nicht sichtbar"
+curl -s -X POST -d '{"jsonrpc":"2.0","id":2,"method":"tools/call","params":{"name":"leave_inquiry","arguments":{"request":"Dach undicht, bitte Rueckruf","contact":"kunde@example.com"}}}' "$U" | grep -q "handed to a person" && ok "Anfrage weitergegeben" || bad "Anfrage"
+grep -q 'Dach undicht' "$SL" && grep -q '"quelle":"AI assistant"' "$SL" && ok "Dienst hat die Anfrage" || bad "Dienst ohne Anfrage"
+echo pausiert > "$ST"; w transient delete open_door_service_state >/dev/null 2>&1
+curl -s -X POST -d '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"leave_inquiry","arguments":{"request":"x","contact":"y"}}}' "$U" | grep -q "Unknown tool" && ok "pausiert: Werkzeug gesperrt" || bad "pausiert"
+w eval 'Open_Door_Service::forget(); echo Open_Door_Service::is_registered() ? "JA" : "NEIN";' | grep -qx NEIN && ok "Verbindung entfernen" || bad "Verbindung entfernen"
+docker rm -f aidoor-stub >/dev/null 2>&1
 w plugin deactivate open-door-ai >/dev/null
 [ "$(curl -s -o /dev/null -w %{http_code} localhost:8089/.well-known/agent-card.json)" != 200 ] && [ "$(curl -s -o /dev/null -w %{http_code} -X POST -d '{}' $U)" = 404 ] && ok "Deaktivierung: Adressen weg" || bad "Deaktivierung"
 w option get open_door_settings --format=json | grep -q '"company"' && ok "Einstellungen nach Deaktivierung noch da (gewollt)" || bad "Einstellungen weg"

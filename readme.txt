@@ -4,17 +4,17 @@ Tags: ai assistants, chatgpt, inquiries, llms.txt, mcp
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.2.1
+Stable tag: 0.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-When an AI assistant such as ChatGPT finds your business, it can leave an inquiry for you by e-mail (inquiry service coming soon).
+When an AI assistant such as ChatGPT finds your business, it can leave an inquiry for you, and you get it as an e-mail (optional inquiry service).
 
 == Description ==
 
 Open Door for AI Assistants makes your business readable for AI assistants. You answer three questions. The plugin does the rest.
 
-What makes it different: other plugins stop at making your pages readable. Open Door goes one step further. With the optional inquiry service, an AI assistant will be able to leave an inquiry for a person, and you will receive it as an e-mail. The inquiry service is planned and not available yet: it will start soon. The free plugin prepares the door. The inquiry service will be a separate, paid service by flowboxx and is not part of this plugin (see "External services").
+What makes it different: other plugins stop at making your pages readable. Open Door goes one step further. With the optional inquiry service, an AI assistant can leave an inquiry for a person, and you receive it as an e-mail. The free plugin prepares the door. The inquiry service is a separate, paid service by flowboxx and is not part of this plugin (see "External services").
 
 What you get, free and without an account:
 
@@ -28,7 +28,7 @@ Good to know:
 
 * There is no AI inside this plugin. It writes a short description of your business and serves it. Nothing is generated or decided by a model.
 * The free part works on its own. Nothing is locked behind an account.
-* The plugin sends no data anywhere and has no tracking.
+* Without the inquiry service the plugin sends no data anywhere and has no tracking.
 * Nobody can promise that an AI assistant will mention your business. This plugin makes your information readable, nothing more.
 * Your e-mail address is stored in your own WordPress only. It is not published.
 * Nothing is written to your file system. If a real `llms.txt` file exists in your web root, your server delivers that one first.
@@ -40,9 +40,16 @@ The cards follow the A2A agent card format and the MCP server card format. The e
 
 == External services ==
 
-This version connects to no external service and sends no data.
+The free part of this plugin connects to no external service and sends no data.
 
-The inquiry service is a separate, optional service by flowboxx (https://flowboxx.de/). It is planned and starts soon, it is not available yet. It will cost 19 EUR per month plus VAT and can be cancelled monthly. It is not included in this plugin and is not switched on by it. It would only be connected after you do so yourself and confirm your e-mail address, and this readme will describe exactly what is sent before that is released.
+The inquiry service is a separate, optional service by flowboxx, Oer-Erkenschwick, Germany (https://flowboxx.de/). It costs 19 EUR per month plus VAT and can be cancelled monthly. It is not included in the free part and is not switched on by it. Nothing is sent to the service until you press "Register for the inquiry service" on the settings page. If you do:
+
+* When you register, the plugin sends the address of your website and the e-mail address for inquiries to https://agent.flowboxx.de, once. The service sends a message to that address. Inquiries are forwarded only after you confirmed the address and subscribed.
+* While the service is registered, the plugin asks https://agent.flowboxx.de/open-door/status from time to time (at most every ten minutes when the page is used) with a secret key to learn whether your subscription is active.
+* When an AI assistant leaves an inquiry on your website, the plugin sends the text of the inquiry, the contact the visitor gave and the name of the assistant to https://agent.flowboxx.de. The service stores it for at most 90 days and forwards it to your e-mail address. It is deleted at once when you cancel.
+* Payment is handled by Stripe, outside your website.
+
+Privacy: https://agent.flowboxx.de/datenschutz
 
 == Installation ==
 
@@ -66,10 +73,10 @@ Nobody can promise that. The plugin only makes your information easy to read.
 On the settings page. Press "Check my addresses" to test them.
 
 = How do inquiries from AI assistants reach me? =
-Through the optional inquiry service by flowboxx, which starts soon and is not available yet. It is not part of this plugin. The free plugin only makes your information readable.
+Through the optional inquiry service by flowboxx. It is not part of the free plugin. The free plugin only makes your information readable.
 
 = What does the inquiry service cost? =
-The inquiry service starts soon. It will cost 19 EUR per month plus VAT, cancellable monthly. The free plugin works without it.
+19 EUR per month plus VAT, cancellable monthly. The free plugin works without it.
 
 = Does it work with Multisite? =
 Use it per single site. Network activation is not supported in this version.
@@ -81,6 +88,9 @@ Use it per single site. Network activation is not supported in this version.
 3. The block on a page of your website.
 
 == Changelog ==
+
+= 0.3.0 =
+* Optional inquiry service: register on the settings page, an assistant tool "leave_inquiry" appears while the subscription is active. Nothing is sent before you register.
 
 = 0.2.1 =
 * Text: the inquiry service is marked as starting soon. No code change.

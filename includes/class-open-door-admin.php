@@ -52,9 +52,13 @@ class Open_Door_Admin {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-		$s   = Open_Door_Data::settings();
-		$opt = Open_Door_Data::OPTION;
+		$s      = Open_Door_Data::settings();
+		$opt    = Open_Door_Data::OPTION;
+		$notice = self::handle_service_post();
 		echo '<div class="wrap"><h1>' . esc_html__( 'Open Door for AI Assistants', 'open-door-ai' ) . '</h1>';
+		if ( '' !== $notice ) {
+			echo '<div class="notice notice-info"><p>' . esc_html( $notice ) . '</p></div>';
+		}
 		echo '<p>' . esc_html__( 'Tell us about your business. We write a short description that AI assistants can read.', 'open-door-ai' ) . '</p>';
 		if ( ! Open_Door_Data::is_https() ) {
 			echo '<div class="notice notice-warning"><p>' . esc_html__( 'Your website needs https (the lock symbol in the browser) first. Please ask your hoster. Until then nothing is published.', 'open-door-ai' ) . '</p></div>';
@@ -85,9 +89,55 @@ class Open_Door_Admin {
 			submit_button( __( 'Check my addresses', 'open-door-ai' ), 'secondary', 'open_door_check', false );
 			echo '</form>';
 			self::run_check();
+			self::service_box();
 		}
-		echo '<p class="description">' . esc_html__( 'This plugin has no AI inside and sends no data anywhere. Nobody can promise that an AI assistant will mention your business.', 'open-door-ai' ) . '</p>';
+		echo '<p class="description">' . esc_html__( 'This plugin has no AI inside. It sends no data anywhere unless you register for the optional inquiry service. Nobody can promise that an AI assistant will mention your business.', 'open-door-ai' ) . '</p>';
 		echo '</div>';
+	}
+
+	/** Handles the buttons of the inquiry service box. Returns a message for the top of the page. */
+	private static function handle_service_post() {
+		if ( empty( $_POST['open_door_service_action'] ) || ! isset( $_POST['open_door_service_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['open_door_service_nonce'] ) ), 'open_door_service' ) ) {
+			return '';
+		}
+		$action = sanitize_key( wp_unslash( $_POST['open_door_service_action'] ) );
+		if ( 'register' === $action ) {
+			$result = Open_Door_Service::register();
+			return true === $result ? __( 'Registered. We sent a message to your e-mail address. Please confirm the address with the link in it.', 'open-door-ai' ) : (string) $result;
+		}
+		if ( 'check' === $action ) {
+			delete_transient( Open_Door_Service::TRANSIENT );
+			return __( 'Status updated.', 'open-door-ai' );
+		}
+		if ( 'forget' === $action ) {
+			Open_Door_Service::forget();
+			return __( 'The connection to the inquiry service was removed from this website. A running subscription is not cancelled by this.', 'open-door-ai' );
+		}
+		return '';
+	}
+
+	private static function service_box() {
+		echo '<h2>' . esc_html__( 'Inquiry service (optional, separate from this plugin)', 'open-door-ai' ) . '</h2>';
+		echo '<p>' . esc_html__( 'With the inquiry service an AI assistant can leave an inquiry for you, and you receive it as an e-mail. It is a service by flowboxx and costs 19 EUR per month plus VAT, cancellable monthly. The free part works without it.', 'open-door-ai' ) . '</p>';
+		echo '<form method="post">';
+		wp_nonce_field( 'open_door_service', 'open_door_service_nonce' );
+		if ( ! Open_Door_Service::is_registered() ) {
+			echo '<p class="description">' . esc_html__( 'When you register, the address of your website and your e-mail address for inquiries are sent to flowboxx, once. Nothing is sent before.', 'open-door-ai' ) . '</p>';
+			echo '<button type="submit" class="button button-primary" name="open_door_service_action" value="register">' . esc_html__( 'Register for the inquiry service', 'open-door-ai' ) . '</button>';
+		} else {
+			$state = Open_Door_Service::state();
+			$label = array(
+				'aktiv'      => __( 'Active. Inquiries from AI assistants reach your e-mail address.', 'open-door-ai' ),
+				'ausstehend' => __( 'Waiting. Please confirm your e-mail address with the link we sent you, then subscribe on the page that opens.', 'open-door-ai' ),
+				'pausiert'   => __( 'Paused because a payment is overdue. Collected inquiries are kept and delivered after payment.', 'open-door-ai' ),
+				'gekuendigt' => __( 'Cancelled.', 'open-door-ai' ),
+			);
+			$text  = is_array( $state ) && isset( $label[ $state['abo'] ] ) ? $label[ $state['abo'] ] : __( 'The state could not be read right now.', 'open-door-ai' );
+			echo '<p><strong>' . esc_html( $text ) . '</strong></p>';
+			echo '<button type="submit" class="button" name="open_door_service_action" value="check">' . esc_html__( 'Check status', 'open-door-ai' ) . '</button> ';
+			echo '<button type="submit" class="button" name="open_door_service_action" value="forget">' . esc_html__( 'Remove connection from this website', 'open-door-ai' ) . '</button>';
+		}
+		echo '</form>';
 	}
 
 	private static function run_check() {

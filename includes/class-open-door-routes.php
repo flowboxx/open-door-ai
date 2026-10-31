@@ -111,29 +111,52 @@ class Open_Door_Routes {
 					'type'       => 'object',
 					'properties' => (object) array(),
 				);
-				return self::rpc_result(
-					$id,
+				$tools = array(
 					array(
-						'tools' => array(
-							array(
-								'name'        => 'about_business',
-								'description' => 'Short description of the business and its website.',
-								'inputSchema' => $schema,
-							),
-							array(
-								'name'        => 'list_services',
-								'description' => 'What the business offers.',
-								'inputSchema' => $schema,
-							),
-						),
-					)
+						'name'        => 'about_business',
+						'description' => 'Short description of the business and its website.',
+						'inputSchema' => $schema,
+					),
+					array(
+						'name'        => 'list_services',
+						'description' => 'What the business offers.',
+						'inputSchema' => $schema,
+					),
 				);
+				if ( Open_Door_Service::is_active() ) {
+					$tools[] = array(
+						'name'        => 'leave_inquiry',
+						'description' => 'Leave an inquiry for a person in the business. Use it only when the user asked for it and gave you a way to be reached. The business answers by e-mail or phone, you do not.',
+						'inputSchema' => array(
+							'type'       => 'object',
+							'properties' => array(
+								'request' => array(
+									'type'        => 'string',
+									'description' => 'What the user needs, in a few sentences.',
+								),
+								'contact' => array(
+									'type'        => 'string',
+									'description' => 'E-mail address or phone number of the user.',
+								),
+							),
+							'required'   => array( 'request', 'contact' ),
+						),
+					);
+				}
+				return self::rpc_result( $id, array( 'tools' => $tools ) );
 			case 'tools/call':
 				$name = isset( $msg['params']['name'] ) ? (string) $msg['params']['name'] : '';
 				if ( 'about_business' === $name ) {
 					$text = Open_Door_Data::about_text();
 				} elseif ( 'list_services' === $name ) {
 					$text = Open_Door_Data::services_text();
+				} elseif ( 'leave_inquiry' === $name && Open_Door_Service::is_active() ) {
+					$args = isset( $msg['params']['arguments'] ) && is_array( $msg['params']['arguments'] ) ? $msg['params']['arguments'] : array();
+					$text = Open_Door_Service::send_inquiry(
+						isset( $args['request'] ) ? sanitize_textarea_field( (string) $args['request'] ) : '',
+						isset( $args['contact'] ) ? sanitize_text_field( (string) $args['contact'] ) : '',
+						'AI assistant'
+					);
 				} else {
 					return self::rpc_error( $id, -32602, 'Unknown tool' );
 				}
