@@ -1,12 +1,12 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "ai-door/ask",
+	"name": "open-door-ai/ask",
 	"title": "Ask an AI about us",
 	"category": "widgets",
 	"icon": "format-chat",
 	"description": "Shows a short question visitors can ask their AI assistant about your business.",
-	"textdomain": "ai-door",
-	"editorScript": "ai-door-ask-editor",
-	"style": "ai-door-ask"
+	"textdomain": "open-door-ai",
+	"editorScript": "open-door-ai-ask-editor",
+	"style": "open-door-ai-ask"
 }

@@ -2,16 +2,16 @@
 /**
  * Settings and document builders (agent card, server card, llms.txt, MCP texts).
  *
- * @package AI_Door
+ * @package Open_Door
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class AI_Door_Data {
+class Open_Door_Data {
 
-	const OPTION = 'ai_door_settings';
+	const OPTION = 'open_door_settings';
 
 	/** @return array{company:string,services:string,contact_mail:string,footer:int} */
 	public static function settings() {
@@ -58,14 +58,14 @@ class AI_Door_Data {
 		$tag = trim( wp_strip_all_tags( get_bloginfo( 'description' ) ) );
 		if ( '' === $tag ) {
 			/* translators: %s: company name */
-			return sprintf( __( 'Information about %s for AI assistants.', 'ai-door' ), self::company() );
+			return sprintf( __( 'Information about %s for AI assistants.', 'open-door-ai' ), self::company() );
 		}
 		return $tag;
 	}
 
 	public static function endpoint_url() {
-		$url = rest_url( 'ai-door/v1/mcp' );
-		return apply_filters( 'ai_door_interface_url', $url );
+		$url = rest_url( 'open-door-ai/v1/mcp' );
+		return apply_filters( 'open_door_interface_url', $url );
 	}
 
 	public static function addresses() {
@@ -95,14 +95,14 @@ class AI_Door_Data {
 				'id'          => ( '' !== $slug ? $slug : 'service' ) . '-' . ( $i + 1 ),
 				'name'        => $line,
 				/* translators: 1: service, 2: company */
-				'description' => sprintf( __( '%1$s, offered by %2$s.', 'ai-door' ), $line, self::company() ),
+				'description' => sprintf( __( '%1$s, offered by %2$s.', 'open-door-ai' ), $line, self::company() ),
 				'tags'        => self::tags( $line ),
 			);
 		}
 		if ( ! $skills ) {
 			$skills[] = array(
 				'id'          => 'about',
-				'name'        => __( 'About the business', 'ai-door' ),
+				'name'        => __( 'About the business', 'open-door-ai' ),
 				'description' => self::description(),
 				'tags'        => array( 'about', 'business' ),
 			);
@@ -136,7 +136,7 @@ class AI_Door_Data {
 	public static function server_card() {
 		return array(
 			'$schema'     => 'https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json',
-			'name'        => 'wordpress.ai-door/' . sanitize_title( wp_parse_url( home_url(), PHP_URL_HOST ) ),
+			'name'        => 'wordpress.open-door-ai/' . sanitize_title( wp_parse_url( home_url(), PHP_URL_HOST ) ),
 			'title'       => self::company(),
 			'version'     => '1.0.0',
 			'description' => self::description(),
@@ -156,7 +156,7 @@ class AI_Door_Data {
 		$out .= '> ' . self::description() . "\n\n";
 		$svc  = self::services();
 		if ( $svc ) {
-			$out .= '## ' . __( 'What we offer', 'ai-door' ) . "\n\n";
+			$out .= '## ' . __( 'What we offer', 'open-door-ai' ) . "\n\n";
 			foreach ( $svc as $line ) {
 				$out .= '- ' . $line . "\n";
 			}
@@ -170,7 +170,7 @@ class AI_Door_Data {
 			)
 		);
 		if ( $pages ) {
-			$out .= '## ' . __( 'Pages', 'ai-door' ) . "\n\n";
+			$out .= '## ' . __( 'Pages', 'open-door-ai' ) . "\n\n";
 			foreach ( $pages as $page ) {
 				$title = str_replace( array( '[', ']' ), '', wp_strip_all_tags( get_the_title( $page ) ) );
 				if ( '' === trim( $title ) ) {
@@ -191,7 +191,7 @@ class AI_Door_Data {
 	public static function services_text() {
 		$svc = self::services();
 		if ( ! $svc ) {
-			return __( 'No services listed yet. Please see the website.', 'ai-door' ) . ' ' . home_url( '/' );
+			return __( 'No services listed yet. Please see the website.', 'open-door-ai' ) . ' ' . home_url( '/' );
 		}
 		return '- ' . implode( "\n- ", $svc );
 	}

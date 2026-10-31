@@ -1,8 +1,8 @@
 ( function ( wp ) {
 	var el = wp.element.createElement;
-	wp.blocks.registerBlockType( 'ai-door/ask', {
+	wp.blocks.registerBlockType( 'open-door-ai/ask', {
 		edit: function () {
-			return el( wp.serverSideRender, { block: 'ai-door/ask' } );
+			return el( wp.serverSideRender, { block: 'open-door-ai/ask' } );
 		},
 		save: function () {
 			return null;

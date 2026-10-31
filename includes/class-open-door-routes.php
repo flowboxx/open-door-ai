@@ -3,19 +3,19 @@
  * Serves the well-known documents, llms.txt and the read-only MCP endpoint.
  * Nothing is written to disk. Deactivating the plugin removes every address.
  *
- * @package AI_Door
+ * @package Open_Door
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class AI_Door_Routes {
+class Open_Door_Routes {
 
 	const PROTOCOL = '2025-06-18';
 
 	public static function maybe_serve() {
-		if ( ! AI_Door_Data::is_configured() || ! AI_Door_Data::is_https() ) {
+		if ( ! Open_Door_Data::is_configured() || ! Open_Door_Data::is_https() ) {
 			return;
 		}
 		$uri  = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
@@ -27,15 +27,15 @@ class AI_Door_Routes {
 		$path = '/' . ltrim( $path, '/' );
 
 		$json_routes = array(
-			'/.well-known/agent-card.json'      => array( 'AI_Door_Data', 'agent_card' ),
-			'/.well-known/agent.json'           => array( 'AI_Door_Data', 'agent_card' ),
-			'/.well-known/mcp/server-card.json' => array( 'AI_Door_Data', 'server_card' ),
+			'/.well-known/agent-card.json'      => array( 'Open_Door_Data', 'agent_card' ),
+			'/.well-known/agent.json'           => array( 'Open_Door_Data', 'agent_card' ),
+			'/.well-known/mcp/server-card.json' => array( 'Open_Door_Data', 'server_card' ),
 		);
 		if ( isset( $json_routes[ $path ] ) ) {
 			self::send( 'application/json; charset=utf-8', wp_json_encode( call_user_func( $json_routes[ $path ] ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT ) );
 		}
 		if ( '/llms.txt' === $path ) {
-			self::send( 'text/plain; charset=utf-8', AI_Door_Data::llms_txt() );
+			self::send( 'text/plain; charset=utf-8', Open_Door_Data::llms_txt() );
 		}
 	}
 
@@ -62,7 +62,7 @@ class AI_Door_Routes {
 
 	public static function register_rest() {
 		register_rest_route(
-			'ai-door/v1',
+			'open-door-ai/v1',
 			'/mcp',
 			array(
 				'methods'             => array( 'POST', 'GET' ),
@@ -73,7 +73,7 @@ class AI_Door_Routes {
 	}
 
 	public static function mcp( WP_REST_Request $request ) {
-		if ( ! AI_Door_Data::is_configured() ) {
+		if ( ! Open_Door_Data::is_configured() ) {
 			return new WP_REST_Response( array( 'error' => 'not configured' ), 404 );
 		}
 		if ( 'POST' !== $request->get_method() ) {
@@ -99,8 +99,8 @@ class AI_Door_Routes {
 						'protocolVersion' => self::PROTOCOL,
 						'capabilities'    => array( 'tools' => (object) array() ),
 						'serverInfo'      => array(
-							'name'    => AI_Door_Data::company(),
-							'version' => AI_DOOR_VERSION,
+							'name'    => Open_Door_Data::company(),
+							'version' => OPEN_DOOR_VERSION,
 						),
 					)
 				);
@@ -131,9 +131,9 @@ class AI_Door_Routes {
 			case 'tools/call':
 				$name = isset( $msg['params']['name'] ) ? (string) $msg['params']['name'] : '';
 				if ( 'about_business' === $name ) {
-					$text = AI_Door_Data::about_text();
+					$text = Open_Door_Data::about_text();
 				} elseif ( 'list_services' === $name ) {
-					$text = AI_Door_Data::services_text();
+					$text = Open_Door_Data::services_text();
 				} else {
 					return self::rpc_error( $id, -32602, 'Unknown tool' );
 				}
