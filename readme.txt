@@ -4,7 +4,7 @@ Tags: ai assistants, chatgpt, inquiries, llms.txt, mcp
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.3.1
+Stable tag: 0.3.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,6 +52,8 @@ The inquiry service is a separate, optional service by flowboxx, Oer-Erkenschwic
 Privacy: https://agent.flowboxx.de/datenschutz
 Data processing agreement: https://agent.flowboxx.de/avv
 
+More about the plugin and the inquiry service: https://flowboxx.de/open-door/en/
+
 == Installation ==
 
 1. Install and activate the plugin.
@@ -89,6 +91,9 @@ Use it per single site. Network activation is not supported in this version.
 3. The block on a page of your website.
 
 == Changelog ==
+
+= 0.3.2 =
+* Plugin page added: https://flowboxx.de/open-door/en/ (English), https://flowboxx.de/open-door/ (German). No code change.
 
 = 0.3.1 =
 * The inquiry service registration needs a tick for the data processing agreement (text: https://agent.flowboxx.de/avv).

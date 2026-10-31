@@ -16,7 +16,7 @@ The optional inquiry service (19 EUR per month plus VAT, cancellable monthly) is
 
 * Requires WordPress 6.4, PHP 7.4, https
 * License: GPLv2 or later
-* Page for site owners (German): https://flowboxx.de/open-door/
+* Page for site owners: https://flowboxx.de/open-door/en/ (English), https://flowboxx.de/open-door/ (Deutsch)
 * Command line tool for developers: https://github.com/flowboxx/agent-card-starter
 
 The WordPress.org description is in `readme.txt`.
