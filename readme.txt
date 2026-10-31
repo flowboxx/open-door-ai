@@ -4,17 +4,17 @@ Tags: ai assistants, chatgpt, inquiries, llms.txt, mcp
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.2.0
+Stable tag: 0.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-When an AI assistant such as ChatGPT finds your business, it can leave an inquiry for you, and you get it as an e-mail (optional inquiry service).
+When an AI assistant such as ChatGPT finds your business, it can leave an inquiry for you by e-mail (inquiry service coming soon).
 
 == Description ==
 
 Open Door for AI Assistants makes your business readable for AI assistants. You answer three questions. The plugin does the rest.
 
-What makes it different: other plugins stop at making your pages readable. Open Door goes one step further. With the optional inquiry service, an AI assistant can leave an inquiry for a person, and you receive it as an e-mail. The free plugin prepares the door. The inquiry service is a separate, paid service by flowboxx and is not part of this plugin (see "External services").
+What makes it different: other plugins stop at making your pages readable. Open Door goes one step further. With the optional inquiry service, an AI assistant will be able to leave an inquiry for a person, and you will receive it as an e-mail. The inquiry service is planned and not available yet: it will start soon. The free plugin prepares the door. The inquiry service will be a separate, paid service by flowboxx and is not part of this plugin (see "External services").
 
 What you get, free and without an account:
 
@@ -42,7 +42,7 @@ The cards follow the A2A agent card format and the MCP server card format. The e
 
 This version connects to no external service and sends no data.
 
-The inquiry service is a separate, optional service by flowboxx (https://flowboxx.de/). It costs 19 EUR per month plus VAT and can be cancelled monthly. It is not included in this plugin and is not switched on by it. It would only be connected after you do so yourself and confirm your e-mail address, and this readme will describe exactly what is sent before that is released.
+The inquiry service is a separate, optional service by flowboxx (https://flowboxx.de/). It is planned and starts soon, it is not available yet. It will cost 19 EUR per month plus VAT and can be cancelled monthly. It is not included in this plugin and is not switched on by it. It would only be connected after you do so yourself and confirm your e-mail address, and this readme will describe exactly what is sent before that is released.
 
 == Installation ==
 
@@ -66,10 +66,10 @@ Nobody can promise that. The plugin only makes your information easy to read.
 On the settings page. Press "Check my addresses" to test them.
 
 = How do inquiries from AI assistants reach me? =
-Through the optional inquiry service by flowboxx. It is not part of this plugin. The free plugin only makes your information readable.
+Through the optional inquiry service by flowboxx, which starts soon and is not available yet. It is not part of this plugin. The free plugin only makes your information readable.
 
 = What does the inquiry service cost? =
-19 EUR per month plus VAT, cancellable monthly. The free plugin works without it.
+The inquiry service starts soon. It will cost 19 EUR per month plus VAT, cancellable monthly. The free plugin works without it.
 
 = Does it work with Multisite? =
 Use it per single site. Network activation is not supported in this version.
@@ -81,6 +81,9 @@ Use it per single site. Network activation is not supported in this version.
 3. The block on a page of your website.
 
 == Changelog ==
+
+= 0.2.1 =
+* Text: the inquiry service is marked as starting soon. No code change.
 
 = 0.2.0 =
 * Renamed to Open Door for AI Assistants (slug open-door-ai). Block is now open-door-ai/ask, shortcode [open_door_ask], settings page under Settings, Open Door. No other change.

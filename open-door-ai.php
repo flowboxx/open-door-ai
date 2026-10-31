@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name:       Open Door for AI Assistants
- * Description:       When an AI assistant such as ChatGPT finds your business, it can leave an inquiry for you, and you get it as an e-mail (optional inquiry service). Free: agent card, llms.txt and a read-only MCP endpoint from three answers. No AI inside.
- * Version:           0.2.0
+ * Description:       When an AI assistant such as ChatGPT finds your business, it can leave an inquiry for you by e-mail (inquiry service coming soon). Free: agent card, llms.txt and a read-only MCP endpoint from three answers. No AI inside.
+ * Version:           0.2.1
  * Requires at least: 6.4
  * Requires PHP:      7.4
  * Author:            flowboxx
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'OPEN_DOOR_VERSION', '0.2.0' );
+define( 'OPEN_DOOR_VERSION', '0.2.1' );
 define( 'OPEN_DOOR_FILE', __FILE__ );
 define( 'OPEN_DOOR_DIR', plugin_dir_path( __FILE__ ) );
 
