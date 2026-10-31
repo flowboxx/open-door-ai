@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Open Door for AI Assistants">
+  <rect width="256" height="256" rx="40" fill="#0A0B0D"/>
+  <!-- door frame -->
+  <path d="M72 212V64a8 8 0 0 1 8-8h96a8 8 0 0 1 8 8v148" fill="none" stroke="#9FB4C9" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- open door leaf -->
+  <path d="M80 64L140 52V196L80 208Z" fill="#F4F6F8"/>
+  <!-- light falling through the opening -->
+  <path d="M140 64h36v142h-36z" fill="#9FB4C9" fill-opacity=".28"/>
+  <circle cx="126" cy="140" r="6" fill="#0A0B0D"/>
+  <path d="M56 212h144" stroke="#9FB4C9" stroke-width="10" stroke-linecap="round"/>
+</svg>

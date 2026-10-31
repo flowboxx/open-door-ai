@@ -97,6 +97,8 @@ with sync_playwright() as p:
         if page.locator(".components-modal__frame").count() and page.locator(sel).count():
             page.locator(sel).first.click()
             page.wait_for_timeout(500)
+    page.evaluate("wp.data.dispatch('core/editor').setIsInserterOpened(false)")
+    page.wait_for_timeout(1500)
     page.screenshot(path=SHOT + "/screenshot-2.png")
     ok("Seite veroeffentlicht (nur im Test-WordPress)")
     check(not any("open-door-ai" in e or "open_door" in e for e in errors), "keine JS-Fehler des Plugins im Editor")

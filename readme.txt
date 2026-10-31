@@ -2,7 +2,7 @@
 Contributors: flowboxx
 Tags: ai assistants, chatgpt, inquiries, llms.txt, mcp
 Requires at least: 6.4
-Tested up to: 6.8
+Tested up to: 7.1
 Requires PHP: 7.4
 Stable tag: 0.2.0
 License: GPLv2 or later
@@ -73,6 +73,12 @@ Through the optional inquiry service by flowboxx. It is not part of this plugin.
 
 = Does it work with Multisite? =
 Use it per single site. Network activation is not supported in this version.
+
+== Screenshots ==
+
+1. Settings page: three answers, then the addresses are listed.
+2. The block "Ask an AI about us" in the block editor.
+3. The block on a page of your website.
 
 == Changelog ==
 
