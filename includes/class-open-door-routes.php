@@ -42,7 +42,7 @@ class Open_Door_Routes {
 	private static function send( $type, $body ) {
 		$method = isset( $_SERVER['REQUEST_METHOD'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_METHOD'] ) ) : 'GET';
 		if ( ! defined( 'DONOTCACHEPAGE' ) ) {
-			define( 'DONOTCACHEPAGE', true );
+			define( 'DONOTCACHEPAGE', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- standard constant read by cache plugins.
 		}
 		if ( ! in_array( $method, array( 'GET', 'HEAD' ), true ) ) {
 			status_header( 405 );
