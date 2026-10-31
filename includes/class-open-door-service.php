@@ -14,6 +14,8 @@ class Open_Door_Service {
 
 	const OPTION    = 'open_door_service';
 	const TRANSIENT = 'open_door_service_state';
+	/** Version of the data processing agreement the owner accepts (text at https://agent.flowboxx.de/avv). */
+	const AVV_VERSION = '2026-10-31-1';
 
 	/** @return string Base address of the service. */
 	public static function api() {
@@ -62,6 +64,7 @@ class Open_Door_Service {
 					array(
 						'site_url' => home_url( '/' ),
 						'mail'     => $mail,
+						'avv'      => self::AVV_VERSION,
 					)
 				),
 			)

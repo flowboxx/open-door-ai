@@ -102,6 +102,9 @@ class Open_Door_Admin {
 		}
 		$action = sanitize_key( wp_unslash( $_POST['open_door_service_action'] ) );
 		if ( 'register' === $action ) {
+			if ( empty( $_POST['open_door_avv'] ) ) {
+				return __( 'Please tick the box to conclude the data processing agreement first.', 'open-door-ai' );
+			}
 			$result = Open_Door_Service::register();
 			return true === $result ? __( 'Registered. We sent a message to your e-mail address. Please confirm the address with the link in it.', 'open-door-ai' ) : (string) $result;
 		}
@@ -123,6 +126,7 @@ class Open_Door_Admin {
 		wp_nonce_field( 'open_door_service', 'open_door_service_nonce' );
 		if ( ! Open_Door_Service::is_registered() ) {
 			echo '<p class="description">' . esc_html__( 'When you register, the address of your website and your e-mail address for inquiries are sent to flowboxx, once. Nothing is sent before.', 'open-door-ai' ) . '</p>';
+			echo '<p><label><input type="checkbox" name="open_door_avv" value="1"> ' . esc_html__( 'I conclude the data processing agreement', 'open-door-ai' ) . '</label> (<a href="https://agent.flowboxx.de/avv" target="_blank" rel="noopener">' . esc_html__( 'read it', 'open-door-ai' ) . '</a>)</p>';
 			echo '<button type="submit" class="button button-primary" name="open_door_service_action" value="register">' . esc_html__( 'Register for the inquiry service', 'open-door-ai' ) . '</button>';
 		} else {
 			$state = Open_Door_Service::state();

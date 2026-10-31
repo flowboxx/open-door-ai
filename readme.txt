@@ -4,7 +4,7 @@ Tags: ai assistants, chatgpt, inquiries, llms.txt, mcp
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.3.0
+Stable tag: 0.3.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,12 +44,13 @@ The free part of this plugin connects to no external service and sends no data.
 
 The inquiry service is a separate, optional service by flowboxx, Oer-Erkenschwick, Germany (https://flowboxx.de/). It costs 19 EUR per month plus VAT and can be cancelled monthly. It is not included in the free part and is not switched on by it. Nothing is sent to the service until you press "Register for the inquiry service" on the settings page. If you do:
 
-* When you register, the plugin sends the address of your website and the e-mail address for inquiries to https://agent.flowboxx.de, once. The service sends a message to that address. Inquiries are forwarded only after you confirmed the address and subscribed.
+* When you register (after ticking the data processing agreement), the plugin sends the address of your website, the e-mail address for inquiries and the version of the agreement to https://agent.flowboxx.de, once. The service sends a message to that address. Inquiries are forwarded only after you confirmed the address and subscribed.
 * While the service is registered, the plugin asks https://agent.flowboxx.de/open-door/status from time to time (at most every ten minutes when the page is used) with a secret key to learn whether your subscription is active.
 * When an AI assistant leaves an inquiry on your website, the plugin sends the text of the inquiry, the contact the visitor gave and the name of the assistant to https://agent.flowboxx.de. The service stores it for at most 90 days and forwards it to your e-mail address. It is deleted at once when you cancel.
 * Payment is handled by Stripe, outside your website.
 
 Privacy: https://agent.flowboxx.de/datenschutz
+Data processing agreement: https://agent.flowboxx.de/avv
 
 == Installation ==
 
@@ -88,6 +89,9 @@ Use it per single site. Network activation is not supported in this version.
 3. The block on a page of your website.
 
 == Changelog ==
+
+= 0.3.1 =
+* The inquiry service registration needs a tick for the data processing agreement (text: https://agent.flowboxx.de/avv).
 
 = 0.3.0 =
 * Optional inquiry service: register on the settings page, an assistant tool "leave_inquiry" appears while the subscription is active. Nothing is sent before you register.

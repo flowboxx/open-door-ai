@@ -36,10 +36,11 @@ docker exec aidoor-wp-1 mkdir -p /var/www/html/wp-content/mu-plugins
 docker exec aidoor-wp-1 sh -c "echo \"<?php add_filter('open_door_service_url', function(){ return 'http://aidoor-stub:8765/open-door'; });\" > /var/www/html/wp-content/mu-plugins/stub.php"
 sleep 1
 w --user=a eval 'Open_Door_Admin::page();' | grep -q "Register for the inquiry service" && ok "Dienst-Box: Anmelden-Knopf" || bad "Dienst-Box"
+w --user=a eval 'Open_Door_Admin::page();' | grep -q 'name="open_door_avv"' && ok "Dienst-Box: AVV-Haekchen" || bad "AVV-Haekchen"
 w eval 'echo Open_Door_Service::is_registered() ? "JA" : "NEIN";' | grep -qx NEIN && ok "vor Anmeldung nicht registriert" || bad "vor Anmeldung"
 [ ! -s "$SL" ] && ok "vor Anmeldung nichts gesendet" || bad "vor Anmeldung gesendet"
 w eval 'var_dump(Open_Door_Service::register());' | grep -q "bool(true)" && ok "Anmeldung" || bad "Anmeldung"
-grep -q '"mail":"info@example.com"' "$SL" && grep -q 'site_url' "$SL" && ok "Anmeldung sendet nur Adresse und Mail" || bad "Anmelde-Inhalt"
+grep -q '"mail":"info@example.com"' "$SL" && grep -q 'site_url' "$SL" && grep -q '"avv":"2026-10-31-1"' "$SL" && ok "Anmeldung sendet nur Adresse und Mail" || bad "Anmelde-Inhalt"
 curl -s -X POST -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' "$U" | grep -q leave_inquiry && bad "Werkzeug vor Aktivierung sichtbar" || ok "Werkzeug erst mit aktivem Abo"
 echo aktiv > "$ST"; w transient delete open_door_service_state >/dev/null 2>&1
 curl -s -X POST -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' "$U" | grep -q leave_inquiry && ok "Werkzeug mit aktivem Abo sichtbar" || bad "Werkzeug nicht sichtbar"
