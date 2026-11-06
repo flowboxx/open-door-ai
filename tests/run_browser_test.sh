@@ -1,5 +1,5 @@
 #!/bin/bash
-# Open Door: browser test (headless Chromium, Playwright) against a local WordPress behind HTTPS (Caddy).
+# flowboxx Door: browser test (headless Chromium, Playwright) against a local WordPress behind HTTPS (Caddy).
 # Needs Docker and python3 with playwright (macOS: /usr/bin/python3). Plugin is copied in with docker cp.
 set -u
 HERE="$(cd "$(dirname "$0")/.." && pwd)"; C="docker compose -p aidoorb -f $HERE/tests/docker-compose.browser.yml"

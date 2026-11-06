@@ -2,7 +2,7 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Open Door for AI Assistants 0.2.1\n"
+"Project-Id-Version: flowboxx Door for AI Assistants 0.3.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/open-door-ai\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 #. Plugin Name of the plugin
 #: open-door-ai.php
 #: includes/class-open-door-admin.php:57
-msgid "Open Door for AI Assistants"
+msgid "flowboxx Door for AI Assistants"
 msgstr ""
 
 #. Description of the plugin
@@ -40,7 +40,7 @@ msgid "Set up"
 msgstr ""
 
 #: includes/class-open-door-admin.php:26
-msgid "Open Door"
+msgid "flowboxx Door"
 msgstr ""
 
 #: includes/class-open-door-admin.php:58

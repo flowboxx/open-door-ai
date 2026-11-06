@@ -1,8 +1,8 @@
-# Open Door for AI Assistants (ODAA)
+# flowboxx Door for AI Assistants
 
 When an AI assistant such as ChatGPT finds your business, it can leave an inquiry for you by e-mail (optional inquiry service).
 
-Open Door is a free WordPress plugin. You answer three questions (company name, services, e-mail address). The plugin then serves:
+flowboxx Door is a free WordPress plugin. You answer three questions (company name, services, e-mail address). The plugin then serves:
 
 * an agent card at `/.well-known/agent-card.json` and `/.well-known/agent.json`
 * an MCP server card at `/.well-known/mcp/server-card.json`

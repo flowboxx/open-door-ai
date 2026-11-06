@@ -1,4 +1,4 @@
-"""Open Door browser test: admin save, address list, check button, block in the editor, block on the front end.
+"""flowboxx Door browser test: admin save, address list, check button, block in the editor, block on the front end.
 Run via tests/run_browser_test.sh (needs the browser compose from this folder). Python 3 + playwright, headless Chromium only."""
 import os, sys, re
 from playwright.sync_api import sync_playwright

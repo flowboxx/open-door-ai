@@ -1,10 +1,10 @@
-=== Open Door for AI Assistants ===
+=== flowboxx Door for AI Assistants ===
 Contributors: flowboxx
 Tags: ai assistants, chatgpt, inquiries, llms.txt, mcp
 Requires at least: 6.4
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 0.3.2
+Stable tag: 0.3.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,9 +12,9 @@ When an AI assistant such as ChatGPT finds your business, it can leave an inquir
 
 == Description ==
 
-Open Door for AI Assistants makes your business readable for AI assistants. You answer three questions. The plugin does the rest.
+flowboxx Door for AI Assistants makes your business readable for AI assistants. You answer three questions. The plugin does the rest.
 
-What makes it different: other plugins stop at making your pages readable. Open Door goes one step further. With the optional inquiry service, an AI assistant can leave an inquiry for a person, and you receive it as an e-mail. The free plugin prepares the door. The inquiry service is a separate, paid service by flowboxx and is not part of this plugin (see "External services").
+With the optional inquiry service, an AI assistant can leave an inquiry for a person, and you receive it as an e-mail. The free plugin prepares the door. The inquiry service is a separate, paid service by flowboxx and is not part of this plugin (see "External services").
 
 What you get, free and without an account:
 
@@ -42,14 +42,17 @@ The cards follow the A2A agent card format and the MCP server card format. The e
 
 The free part of this plugin connects to no external service and sends no data.
 
+The server card (`/.well-known/mcp/server-card.json`) contains the field `$schema` with the address https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json. This is only a text reference inside the JSON file that your website delivers, so that tools can find the format definition. The plugin itself never requests this address and sends no data to modelcontextprotocol.io.
+
 The inquiry service is a separate, optional service by flowboxx, Oer-Erkenschwick, Germany (https://flowboxx.de/). It costs 19 EUR per month plus VAT and can be cancelled monthly. It is not included in the free part and is not switched on by it. Nothing is sent to the service until you press "Register for the inquiry service" on the settings page. If you do:
 
 * When you register (after ticking the data processing agreement), the plugin sends the address of your website, the e-mail address for inquiries and the version of the agreement to https://agent.flowboxx.de, once. The service sends a message to that address. Inquiries are forwarded only after you confirmed the address and subscribed.
 * While the service is registered, the plugin asks https://agent.flowboxx.de/open-door/status from time to time (at most every ten minutes when the page is used) with a secret key to learn whether your subscription is active.
 * When an AI assistant leaves an inquiry on your website, the plugin sends the text of the inquiry, the contact the visitor gave and the name of the assistant to https://agent.flowboxx.de. The service stores it for at most 90 days and forwards it to your e-mail address. It is deleted at once when you cancel.
-* Payment is handled by Stripe, outside your website.
+* Payment is handled by Stripe, outside your website, on the Stripe page. Stripe Terms: https://stripe.com/legal/ssa , Stripe Privacy Policy: https://stripe.com/privacy
 
-Privacy: https://agent.flowboxx.de/datenschutz
+Terms of use: https://agent.flowboxx.de/nutzungshinweise
+Privacy policy: https://agent.flowboxx.de/datenschutz
 Data processing agreement: https://agent.flowboxx.de/avv
 
 More about the plugin and the inquiry service: https://flowboxx.de/open-door/en/
@@ -57,7 +60,7 @@ More about the plugin and the inquiry service: https://flowboxx.de/open-door/en/
 == Installation ==
 
 1. Install and activate the plugin.
-2. Go to Settings, Open Door. Enter your company name, what you offer and an e-mail address.
+2. Go to Settings, flowboxx Door. Enter your company name, what you offer and an e-mail address.
 3. Press "Save and switch on". The addresses are listed on the same page.
 4. Optional: add the block "Ask an AI about us" to a page.
 
@@ -92,6 +95,9 @@ Use it per single site. Network activation is not supported in this version.
 
 == Changelog ==
 
+= 0.3.3 =
+* Renamed to flowboxx Door for AI Assistants (slug unchanged). Description reworded. External services: server card schema URL and terms links explained.
+
 = 0.3.2 =
 * Plugin page added: https://flowboxx.de/open-door/en/ (English), https://flowboxx.de/open-door/ (German). No code change.
 
@@ -105,7 +111,7 @@ Use it per single site. Network activation is not supported in this version.
 * Text: the inquiry service is marked as starting soon. No code change.
 
 = 0.2.0 =
-* Renamed to Open Door for AI Assistants (slug open-door-ai). Block is now open-door-ai/ask, shortcode [open_door_ask], settings page under Settings, Open Door. No other change.
+* Renamed (slug open-door-ai). Block is now open-door-ai/ask, shortcode [open_door_ask]. No other change.
 
 = 0.1.0 =
 * First version.

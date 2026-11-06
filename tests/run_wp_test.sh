@@ -1,5 +1,5 @@
 #!/bin/bash
-# Open Door: lint (PHP 7.4 and 8.3) + live run in a local WordPress (Docker). Needs agent-card-starter for --strict.
+# flowboxx Door: lint (PHP 7.4 and 8.3) + live run in a local WordPress (Docker). Needs agent-card-starter for --strict.
 # Usage: bash tests/run_wp_test.sh [path to agent-card-starter checkout]
 set -u
 HERE="$(cd "$(dirname "$0")/.." && pwd)"; C="docker compose -p aidoor -f $HERE/tests/docker-compose.yml"

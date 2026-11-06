@@ -23,7 +23,7 @@ class Open_Door_Admin {
 	}
 
 	public static function menu() {
-		add_options_page( __( 'Open Door', 'open-door-ai' ), __( 'Open Door', 'open-door-ai' ), 'manage_options', 'open-door-ai', array( __CLASS__, 'page' ) );
+		add_options_page( __( 'flowboxx Door', 'open-door-ai' ), __( 'flowboxx Door', 'open-door-ai' ), 'manage_options', 'open-door-ai', array( __CLASS__, 'page' ) );
 	}
 
 	public static function register_setting() {
@@ -55,7 +55,7 @@ class Open_Door_Admin {
 		$s      = Open_Door_Data::settings();
 		$opt    = Open_Door_Data::OPTION;
 		$notice = self::handle_service_post();
-		echo '<div class="wrap"><h1>' . esc_html__( 'Open Door for AI Assistants', 'open-door-ai' ) . '</h1>';
+		echo '<div class="wrap"><h1>' . esc_html__( 'flowboxx Door for AI Assistants', 'open-door-ai' ) . '</h1>';
 		if ( '' !== $notice ) {
 			echo '<div class="notice notice-info"><p>' . esc_html( $notice ) . '</p></div>';
 		}
